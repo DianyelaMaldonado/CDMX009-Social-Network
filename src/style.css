@@ -569,6 +569,13 @@ input.chageName.boxFields, input.chageProfession.boxFields, input.validatePasswo
     margin-bottom: 50px;
 }
 
+.footer {
+    text-align: center;
+    color: #fff;
+    font-size: .8em;
+    line-height: 2.5em;
+}
+
 /* *********MediasQuerys*********** */
 
 @media (min-width: 1280px) {
