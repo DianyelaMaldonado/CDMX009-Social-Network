@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
             var buttonLogin = document.querySelector('#doLogin');
             buttonLogin.addEventListener('click', function(e) {
                 e.preventDefault();
-                loginPageOne();
+                loginPageOne(user);
             });
 
         })
@@ -148,8 +148,7 @@ function loginPageOne() {
     var pass = document.getElementById('pass').value;
     firebase.auth().signInWithEmailAndPassword(email, pass)
         .then((data) => {
-            viewForum();
-
+            viewForum(data.user);
         })
         .catch(function(error) {
             alert('Los datos ingresados no son correctos');
@@ -181,9 +180,9 @@ function googleButton() {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
         // The signed-in user info.
-        var user = result.user;
+        var user = result.user;  
         viewForum();
-
+        console.log(result.user);
 
         // ...
     }).catch(function(error) {
@@ -331,18 +330,18 @@ function viewForum() {
                 </div>
 
                 <div class="personalInformationPerfilUser">
-                    <div class="namePerfilUser"><strong class="black-text perfilName little">Taco López<i class="material-icons center editProfileIcon">edit</i></strong></div>
+                    <div class="namePerfilUser"><strong class="black-text perfilName little">${doc.data().user}<i class="material-icons center editProfileIcon">edit</i></strong></div>
                     <div class="professionDescription">Developer Sr. en Accenture</div>
                 </div>
             </div>
         </section>
         <form>
             <p>
-                <textarea class="comentUser" name="description" placeholder="Escribe un commit..."></textarea>
+                <textarea class="comentUser" name="description" placeholder="Escribe un commit..." id='showComment'></textarea>
             </p>
             <div class="right-align">
-                <button class="waves-effect waves-light btn-small publication"><i class="material-icons center">image</i></button>
-                <button class="waves-effect waves-light btn-small imegeOfPersonalCommit publication2"><i class="material-icons right">computer</i>Publicar</button>
+                <button class="waves-effect waves-light btn-small publication"><i class="material-icons center" id='userImage'>image</i></button>
+                <button class="waves-effect waves-light btn-small imegeOfPersonalCommit publication2"><i class="material-icons right" id='myCommit'>computer</i>Publicar</button>
             </div>
         </form>
         <div>
@@ -532,3 +531,5 @@ function hideAndShow(hide) {
 function show(show) {
     document.getElementById(show).style.display = 'block';
 }
+
+
