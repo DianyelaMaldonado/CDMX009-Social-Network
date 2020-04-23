@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 buttonFacebook.addEventListener('click', function(e) {
                     e.preventDefault();
                     facebookButton();
-                    viewForum();
                     document.getElementById('hideAndShow').style.display = 'block';
                     movilIcon.classList.add('shown');
                 });
@@ -57,8 +56,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log("Foro", viewRedirectionForum);
                 viewRedirectionForum.forEach(nodo => nodo.addEventListener('click', function(e) {
                     e.preventDefault();
-                    viewForum();
-                    window.history.pushState('Foro', 'Foro', '/Foro')
+                    // window.history.pushState('Foro', 'Foro', '/Foro')
+                    viewForum()
+                        .then(function() {
+                            actionPost();
+                        });
+
                 }));
             }).then(function() {
                 var viewRedirectionProfile = document.querySelectorAll('.perfil');
@@ -96,15 +99,19 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Sidenav.init(elems);
 });
 
+
+
 // En esta parte hago la funcion que va tener mi boton al hacer click
 // en entar a la aplicación en esta parte la que me hace entrar a la app (login)
 function loginPageOne() {
     var email = document.getElementById('email').value;
     var pass = document.getElementById('pass').value;
     var movilIcon = document.getElementById('movilIcon');
+
     firebase.auth().signInWithEmailAndPassword(email, pass)
         .then((data) => {
-            viewForum(data.user);  //BLISS
+            console.log(data);
+            viewForum(data.user); //BLISS
             document.getElementById('hideAndShow').style.display = 'block';
             movilIcon.classList.add('shown');
         })
@@ -118,7 +125,7 @@ function loginPageOne() {
             // renderLogin()
         });
     var cred = firebase.auth.EmailAuthProvider.credential(email, pass);
-}
+};
 
 // **************** L O G I N     G O O G L E*******
 // En esta parte hago la funcion que va tener mi boton al hacer click
@@ -129,25 +136,29 @@ function googleButton() {
     var provider = new firebase.auth.GoogleAuthProvider();
     var movilIcon = document.getElementById('movilIcon');
 
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        viewForum();
-        document.getElementById('hideAndShow').style.display = 'block';
-        movilIcon.classList.add('shown');
-        // ...
-    }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-    });
+    firebase.auth().signInWithPopup(provider)
+        .then(function(result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            viewForum(user)
+                .then(function() {
+                    actionPost();
+                });
+            document.getElementById('hideAndShow').style.display = 'block';
+            movilIcon.classList.add('shown');
+            // ...
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
 }
 
 // **************** L O G I N     F A C E B O O K *******
@@ -157,16 +168,20 @@ function googleButton() {
 function facebookButton() {
     var provider = new firebase.auth.FacebookAuthProvider();
     var movilIcon = document.getElementById('movilIcon');
+
+
     firebase.auth().signInWithPopup(provider)
         .then(function(result) {
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
-            viewForum();
+            console.log(user);
+            viewForum(user);
             movilIcon.classList.add('shown');
             document.getElementById('hideAndShow').style.display = 'block';
         }).catch(function(error) {
+            console.log(error);
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -224,8 +239,31 @@ function register() {
 }
 
 
+function actionPost() {
+    var boton = document.getElementById("addPost"); //aquí es cuando le doy click a el boton de publicar
+    boton.onclick = function() {
+        // console.log('qué está pasando');
+        let text = document.getElementById("publicText"); //este es el ID que estoy llamando el cual está dentro de mi textarea
+        var datosPost = { //esta variable (datosPost) es la que va contener lo datos, viene siendo un objeto lo cual se pintara en mi Database de firestore ---> CloudFirestore
+            body: text.value,
+            user: "Taquito",
+            date: new Date(),
+            img: 'link',
+        }
+        addNewPost(datosPost)
+            .then(function(result) {
+                alert('Post enviado!');
+            })
+            .then(function() {
+                text.value = "";
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+}
 
-
-
-
-
+function addNewPost(datosPost) {
+    var postsCommitUser = db.collection('pruebaPractica'); //aquí coloco el nombre que va a tener mi nueva coleccion
+    return postsCommitUser.add(datosPost);
+}

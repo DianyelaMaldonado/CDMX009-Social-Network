@@ -1,4 +1,5 @@
 function viewLogin() {
+
     return new Promise(function(resolve, rejected) {
         let homeView = `
           <div id="containerOne">

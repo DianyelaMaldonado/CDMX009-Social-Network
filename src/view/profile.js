@@ -1,4 +1,6 @@
 function viewProfile() {
+    console.log();
+
     return new Promise(function(resolve, rejected) {
         let profileView = `
        <!-- ***********PAGINA profile********* -->

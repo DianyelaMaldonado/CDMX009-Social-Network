@@ -1,4 +1,5 @@
 function viewForum(user) {
+
     return new Promise(function(resolve, rejected) {
         let forumView = ` <!-- ***********PAGINA 3********* -->
     <div id="containerThree">
@@ -16,15 +17,15 @@ function viewForum(user) {
                 </div>
             </div>
         </section>
-        <form>
+        <div>
             <p>
-                <textarea class="comentUser" name="description" placeholder="Escribe un commit..."></textarea>
+                <textarea id="publicText" class="comentUser" name="description" placeholder="Escribe un commit..."></textarea>
             </p>
             <div class="right-align">
-                <button class="waves-effect waves-light btn-small publication"><i class="material-icons center">image</i></button>
-                <button class="waves-effect waves-light btn-small imegeOfPersonalCommit publication2"><i class="material-icons right">computer</i>Publicar</button>
+                <input type="file" accept="jpg/png" id="addImage" class="waves-effect waves-light btn-small publication">
+                <button id="addPost" class="waves-effect waves-light btn-small imegeOfPersonalCommit publication2"><i class="material-icons right">computer</i>Publicar</button>
             </div>
-        </form>
+        </div>
         <div>
             <div class="informationBox">
 
@@ -98,4 +99,4 @@ function viewForum(user) {
     });
 };
 
-export { viewForum}
+export { viewForum }

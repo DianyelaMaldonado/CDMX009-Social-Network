@@ -1,4 +1,5 @@
 function editionOfProfile() {
+    console.log();
     return new Promise(function(resolve, rejected) {
         let editProfileVieView = ` 
     <!-- *********** PAGINA 4 EDITAR PERFIL   *********** -->
