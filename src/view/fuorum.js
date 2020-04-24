@@ -1,13 +1,12 @@
-
 function viewForum(user) {
 
     var EmailCortado = 'No hay email';
-    if(typeof user != 'undefined'){
+    if (typeof user != 'undefined') {
         var email = user.email;
         var divisiones = email.split("@");
         EmailCortado = divisiones[0];
     }
-    
+
     return new Promise(function(resolve, rejected) {
         let forumView = ` <!-- ***********PAGINA 3********* -->
     <div id="containerThree">
@@ -30,7 +29,7 @@ function viewForum(user) {
                 <textarea id="showComment" class="comentUser"  name="description" placeholder="Escribe un commit..."></textarea>
             </p>
             <div class="right-align">
-                <button class="waves-effect waves-light btn-small publication"><i class="material-icons center" >image</i></button>
+               <input type="file" accept="image/*" id="file" class="waves-effect waves-light btn-small publication">
                 <button id="publish" class="waves-effect waves-light btn-small imegeOfPersonalCommit publication2" ><i class="material-icons right">computer</i>Publicar</button>
             </div>
         </div>
@@ -107,4 +106,4 @@ function viewForum(user) {
     });
 };
 
-export { viewForum}
+export { viewForum }

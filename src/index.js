@@ -57,9 +57,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 viewRedirectionForum.forEach(nodo => nodo.addEventListener('click', function(e) {
                     e.preventDefault();
                     viewForum()
-                    .then(function() {
-                        publicPost();
-                    });
+                        .then(function() {
+                            publicPost();
+                        });
                     window.history.pushState('Foro', 'Foro', '/Foro')
                 }));
             }).then(function() {
@@ -106,10 +106,10 @@ function loginPageOne() {
     var movilIcon = document.getElementById('movilIcon');
     firebase.auth().signInWithEmailAndPassword(email, pass)
         .then((data) => {
-            viewForum(data.user)//BLISS
-            .then(function() {
-                publicPost();
-            });  
+            viewForum(data.user) //BLISS
+                .then(function() {
+                    publicPost();
+                });
             document.getElementById('hideAndShow').style.display = 'block';
             movilIcon.classList.add('shown');
         })
@@ -140,9 +140,9 @@ function googleButton() {
         // The signed-in user info.
         var user = result.user;
         viewForum(user)
-        .then(function() {
-            publicPost();
-        });
+            .then(function() {
+                publicPost();
+            });
         document.getElementById('hideAndShow').style.display = 'block';
         movilIcon.classList.add('shown');
         // ...
@@ -172,9 +172,9 @@ function facebookButton() {
             // The signed-in user info.
             var user = result.user;
             viewForum(user)
-            .then(function() {
-                publicPost();
-            });
+                .then(function() {
+                    publicPost();
+                });
             movilIcon.classList.add('shown');
             document.getElementById('hideAndShow').style.display = 'block';
         }).catch(function(error) {
@@ -217,7 +217,10 @@ function register() {
         firebase.auth().createUserWithEmailAndPassword(registerEmailLogin2, registerPassLogin2)
             .then((data) => {
                 // alert('Bienvenido ' + data.user.email);
-                viewForum(data.user);
+                viewForum(data.user)
+                    .then(function() {
+                        publicPost();
+                    });
                 document.getElementById('hideAndShow').style.display = 'block';
                 movilIcon.classList.add('shown');
             })
@@ -233,130 +236,67 @@ function register() {
             });
     }
 }
-
-
-
-
-
-
-
-
-/*************** FUNCIONALIDAD DE POSTS***************/
-
- 
-//let fileInput = document.getElementById('file') //variable para la prueba de subir imagen
-
-//global
-// variable para que reciba el link(token) de la foto que esta en storage
-
-
-
-//listeners
-
-/*funcion para subir archivo o archivos en el post
-fileInput.onchange = e => {        
-    let file = e.target.files[0] //lleva el indice cuando se quiere subir varios archivo, si no, se quita el indice y se coloca la llave file
-    firebase.storage().ref("memes").child(file.name).put(file)
-        .then(snap => {   //¿Donde esta el archivo? En file.name
-            return snap.ref.getDownloadURL() //conseguir el link de la imagen. Retornas la promesa y concatenas el otro then
-        })
-        .then(link => {
-            url = link
-            let img = document.createElement('img')
-            img.src = link
-            document.body.appendChild(img)
-        })
-}
-*/
-
-
-
 //traer la informacion del post cuando se le da clic en el boton
-function publicPost(){
-    let url = 'futura imagen'
-    let publicPost = document.getElementById('publish')
-    publicPost.onclick = function(){
-        let text = document.getElementById('showComment')//variable con id en donde se pintaran los post, textArea
-    // traer el texto
-    let post = {
-        texto: text.value,
-        user: "spiderman",
-        date: new Date(),
-        img: url //variable global, aqui se almacena la imagen cuando ya se tiene el link que envio la funcion onchange
-    }
-    //  [ASINCRONO] 
+function publicPost() {
+    let url = 'futura imagen';
+    let publicPost = document.getElementById('publish');
 
-    addNewPost(post)
-        // ESto es asíncrono
-        .then(function(post) { //esto es la promesa
-            alert('hello') //este es el resultado de la promesa
-        })
-        .catch(err => {
-            console.log("todo valió baby: ", err) //esto es el error cuando la respuesta es negativa
-        })
+    publicPost.onclick = function() {
+        let text = document.getElementById('showComment'); //variable con id en donde se pintaran los post, textArea
+        // traer el texto
+        let post = {
+                texto: text.value,
+                user: "spiderman",
+                date: new Date(),
+                img: url //variable global, aqui se almacena la imagen cuando ya se tiene el link que envio la funcion onchange
+            }
+            // Put the object into storage
+        localStorage.setItem('post', JSON.stringify(post)); //Agregar clave / valor en LocalStorage
+        localStorage.setItem('post', JSON.stringify(post));
+        // Retrieve the object from storage
+        var retrievedObject = localStorage.getItem('post'); //Obtengo un valor de LocalStorage
+        console.log('retrievedObject: ', JSON.parse(retrievedObject));
+
+        addNewPost(post)
+            // ESto es asíncrono
+            .then(function(post) { //esto es la promesa
+                alert('hello') //este es el resultado de la promesa
+            })
+            .then(function() {
+                text.value = "";
+            })
+            .catch(err => {
+                console.log(err) //esto es el error cuando la respuesta es negativa
+            })
     }
-    
 }
 
 // firebase
 
-
-
-
-
-
 //pasar a la funcion el objeto que se encuentra en la base de datos de firebase
-function addNewPost(post) { 
-    let postsRef = db.collection('post') //se llama post porque asi se llama nuestra coleccion en Database 
-    return postsRef.add(post)
-    console.log('post')// <--- esto es una promesa
+function addNewPost(post) {
+    let postsRef = db.collection('prueba de persistencia de datos') //aquí coloco el nombre que va a tener mi nueva coleccion
+        .onSnapshot(function(doc) {
+            console.log("Current data: ", doc.data());
+        });
+
+    // console.log('post') // <--- esto es una promesa
 }
 
-/* leer la coleccion de post
-postsRef.onSnapshot(snap => {
-    let p = document.querySelector('#posts')
-    p.innerHTML = ''
-    snap.forEach(doc => {
-        let div = `<div>
-            <img src="${doc.data().foto}" /> // doc.data xq ahi esta la data
-            <p>${doc.data().texto}</p>
-        </div>`
-        let nodo = document.createElement('div')
-        nodo.innerHTML = div
-        p.appendChild(nodo)
-
-    })
-})
-
-//Obtén un documento
-var docRef = db.collection("cities").doc("SF");
-
-docRef.get().then(function(doc) {
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-
-//Obtén todos los documentos de una colección
-db.collection("post").get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-    });
-});
-
-
-*/
 
 
 
-
-
-
-
-
+// return postsRef.add(post)
+//     .then(function () {
+//         postsRef.onSnapshot(snap => {
+//             snap.forEach(doc => {
+//                 let div = ` <div>
+//                         <img src="{doc.data().img/>
+//                         <p>doc.data().text</p>
+//                     </div>`
+//             })
+//             // let nodo = document.createElement('div');
+//             nodo.innerHTML = div;
+//             document.text.appendChild(nodo);
+//         })
+//     })
