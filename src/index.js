@@ -243,14 +243,6 @@ function register() {
 
 /*************** FUNCIONALIDAD DE POSTS***************/
 
- 
-
-
-//global
-// variable para que reciba el link(token) de la foto que esta en storage
-
-
-
 //listeners
 
 /*funcion para subir archivo o archivos en el post
@@ -275,11 +267,10 @@ let url = ''
 
 */
 
-//function fileInput(){}
 
 //traer la informacion del post cuando se le da clic en el boton
-function publicPost(){
-    let fileInput = document.getElementById('myNewFile') //variable para la prueba de subir imagen
+ function publicPost(){
+    let fileInput = document.getElementById('myNewFile')
     let imageUrl = ''
 
     fileInput.onchange = respuestaCambioImagen => {
@@ -293,69 +284,55 @@ function publicPost(){
                 let img = document.createElement('img')
                 img.src = imageUrl
                 document.body.appendChild(img)
+                document.getElementById("picturePerfect").appendChild(img);
             })
-    }
+     }
 
 
     
-    let publicPost = document.getElementById('publish')
-    //let file = (e).target.file //lleva el indice cuando se quiere subir varios archivos, si no, se quita el indice y se coloca la llave file
-    
-    
-    publicPost.onclick = function(){
+     let publicPost = document.getElementById('publish')
+
+     publicPost.onclick = function(){
         let text = document.getElementById('showComment')//variable con id en donde se pintaran los post, textArea
-    // traer el texto
-    let post = {
+        // traer el texto
+        let post = {
         texto: text.value,
         user: "spiderman",
         date: new Date(),
-        img: imageUrl //variable global, aqui se almacena la imagen cuando ya se tiene el link que envio la funcion onchange
-    }
+        img: imageUrl 
+     }
 
-    
-    //  [ASINCRONO] 
+     addNewPost(post)
+         .then(function(post) { 
+            alert('datos guardados') 
+         })
+         .catch(err => {
+            console.log("Ocurrio un error, intenta mas tarde.", err) 
+         })
+     }
 
-    addNewPost(post)
-        // ESto es asíncrono
-        .then(function(post) { //esto es la promesa
-            alert('datos guardados') //este es el resultado de la promesa
-        })
-        .catch(err => {
-            console.log("Ocurrio un error, intenta mas tarde.", err) //esto es el error cuando la respuesta es negativa
-        })
-    }
+     
     
 }
-
-// firebase
 
 //pasar a la funcion el objeto que se encuentra en la base de datos de firebase
 function addNewPost(post) { 
     let postsRef = db.collection('post') //se llama post porque asi se llama nuestra coleccion en Database 
     return postsRef.add(post)
     console.log('post')
-}
+ }
 
-/* leer la coleccion de post
-postsRef.onSnapshot(snap => {
-    let p = document.querySelector('#posts')
-    p.innerHTML = ''
-    snap.forEach(doc => {
-        let div = `<div>
-            <img src="${doc.data().foto}" /> // doc.data xq ahi esta la data
-            <p>${doc.data().texto}</p>
-        </div>`
-        let nodo = document.createElement('div')
-        nodo.innerHTML = div
-        p.appendChild(nodo)
-
-    })
-})
+ //Obtén todos los documentos de una colección
+     db.collection("post").get().then(function(querySnapshot) {
+     querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+    });
+  });
 
 //Obtén un documento
-var docRef = db.collection("cities").doc("SF");
-
-docRef.get().then(function(doc) {
+ let docRef = db.collection("post").doc("fna7W1xk1Xq2xT03FtRG");
+ docRef.get().then(function(doc) {
     if (doc.exists) {
         console.log("Document data:", doc.data());
     } else {
@@ -364,22 +341,25 @@ docRef.get().then(function(doc) {
     }
 }).catch(function(error) {
     console.log("Error getting document:", error);
-});
-
-//Obtén todos los documentos de una colección
-db.collection("post").get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-    });
-});
+ });
 
 
-*/
+ //leer la coleccion de post
+ let postsRef = db.collection('post')
 
-
-
-
+ postsRef.onSnapshot(snap => {
+    let p = document.getElementById('collection')
+    p.innerHTML = 'collection'
+    snap.forEach(doc => {
+        let div = `<div>
+            <img src="${doc.data().imageUrl}" /> // doc.data xq ahi esta la data
+            <p>${doc.data().texto}</p>
+        </div>`
+        let nodo = document.createElement('div')
+        nodo.innerHTML = div
+        p.appendChild(nodo)
+    })
+})
 
 
 

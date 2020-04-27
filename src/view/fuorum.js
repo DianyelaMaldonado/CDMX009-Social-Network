@@ -48,9 +48,7 @@ function viewForum(user) {
             </div>
 
             <div class="comentsAndLikes">
-                <div id="picturePerfect">
-                
-                </div>
+                <div id="picturePerfect"><img with = "200"/></div>
             </div>
             <div class="punchButtons comentsAndLikes">
                 <div class="likeButton">
@@ -83,7 +81,7 @@ function viewForum(user) {
             </div>
 
             <div class="comentsAndLikes">
-                <p class="coments">¿Comunidad, cómo le hago para enrutar con Javascript?</p>
+              <div id="collection"><p class="coments"></p></div>
             </div>
             <div class="punchButtons comentsAndLikes">
                 <div class="likeButton">
