@@ -279,13 +279,13 @@ function publicPost() {
         // traer el texto
         let post = {
             texto: text.value,
-            user: "spiderman",
+            user: "SuperWoman",
             date: new Date(),
             img: imageUrl //variable global, aqui se almacena la imagen cuando ya se tiene el link que envio la funcion onchange
         }
         addNewPost(post)
             .then(function(post) { //esto es la promesa
-                alert('hello') //este es el resultado de la promesa
+                alert('Post Publicado') //este es el resultado de la promesa
             })
             .then(function() {
                 text.value = "";
@@ -300,7 +300,7 @@ function publicPost() {
 
 //pasar a la funcion el objeto que se encuentra en la base de datos de firebase
 function addNewPost(post) {
-    let postsRef = db.collection('post') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    let postsRef = db.collection('pruebasEsther') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
     return postsRef.add(post);
 }
 
@@ -315,6 +315,7 @@ function clickMenus(obtainingPersistenceData) {
                 viewForum(obtainingPersistenceData)
                     .then(function() {
                         publicPost();
+                        document.location.reload();//ES PARA CUNDO REGRESO DE PERFIL O EDITAR PERFIL, ME MUESTRE LO PUBLICADO
                     });
                 window.history.pushState('Foro', 'Foro', '/Foro')
             } else if (userClickMenu == "/Perfil") {
@@ -325,31 +326,16 @@ function clickMenus(obtainingPersistenceData) {
                 window.history.pushState('Editar Perfil', 'Editar Perfil', '/EditarPerfil');
             } else if (userClickMenu == "/cerrarSesion") {
                 out();
+                document.location.reload();//CORRIGE EL ERROR DE RECARGAR LA PAGINA
             }
         })
     });
 }
 
-//funciones de vero para practicar
-//leer la coleccion de post
-/*postsRef.onSnapshot(snap => {
-    let p = document.querySelector('#posts')
-    p.innerHTML = ''
-    snap.forEach(doc => {
-        let div = `<div>
-            <img src="${doc.data().foto}" /> // doc.data xq ahi esta la data
-            <p>${doc.data().texto}</p>
-        </div>`
-        let nodo = document.createElement('div')
-        nodo.innerHTML = div
-        p.appendChild(nodo)
-
-    })
-}) */
 
 //leer coleccion de post
  function readPosts() {     
-     let postsRef = db.collection('post') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos     
+     let postsRef = db.collection('pruebasEsther') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos     
      postsRef.onSnapshot(snap => {
         let publishPust = document.querySelector('#showComment')
         publishPust.innerHTML = ''
@@ -389,7 +375,23 @@ function clickMenus(obtainingPersistenceData) {
  });
 
 
+ //FUNCION PARA EDITAR Y BORRAR UN POST
+ let borrarPost =
  function editPost() {
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+
      // TODO: Get posts from collection to update on firebase
 
      // TODO: Edit coment and save it on firebase
@@ -399,4 +401,4 @@ function clickMenus(obtainingPersistenceData) {
      /*necesitan el id
 que llegue como parametro a editPost
 con ese id hacen un doc(id).update({cosaQueCambio:true})*/
- } 
+ 

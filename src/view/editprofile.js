@@ -1,4 +1,5 @@
 function editionOfProfile(user) {
+    console.log(user);
     var EmailCortado = 'No hay email';
 
     if (typeof user != 'undefined') {
