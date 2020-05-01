@@ -1,18 +1,43 @@
 function buildComent(imageUser, nameUser, img, text, id) {
-    return `<div>
+    return `
+<div>
     <div class="informationBox">
 
         <div class="chip boxStyle">
             <img src="${imageUser}" alt="Contact Person">
             <p>${nameUser}</p>
         </div>
+
         <i class="fas fa-globe-americas world"></i>
-        <i class="material-icons center points actionsComment" data-id="${id}">more_vert</i>
+       
+
+    <div class="fixed-action-btn">
+ 
+   <i class="material-icons center points actionsComment">more_vert</i>
+  
+  <ul>
+    <li class="editPostUser"><a class="btn-floating  purple darken-1"><i data-id="${id}" class="material-icons">edit</i></a></li>
+    <li  class="deletePostUser" data-id="${id}"><a class="btn-floating  purple darken-1" ><i data-id="${id}" class="material-icons">delete</i></a></li>
+
+     </ul>
+    </div>
+
     </div>
 
     <div class="comentsAndLikes">
     <img width="200" src="${img}"/>
          <p class="coments">${text}</p>
+
+           <textarea class="editTextPostUser-${id} onBox" name="description" placeholder="Escribe un commit...">${text}</textarea>
+         
+           <div class="publicationedit-${id} onBox">
+                <input id="newEditPost-${id}" type="file" class="hideFile" name="newEditPost-${id}" accept="image">
+                <label class="waves-effect waves-light btn-small" for="newEditPost-${id}"> <i class="material-icons center">image</i></label>
+                <button id="newPostPublish-${id}" class="waves-effect waves-light btn-small imegeOfPersonalCommit publication2" > <i class="material-icons">check_box</i></button>
+            </div>
+
+
+
     </div>
 
     <div class="punchButtons comentsAndLikes">
@@ -25,5 +50,8 @@ function buildComent(imageUser, nameUser, img, text, id) {
      </div>
 </div>`
 }
+
+
+
 
 export { buildComent }

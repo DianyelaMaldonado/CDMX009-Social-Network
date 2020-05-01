@@ -61,6 +61,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 publicPost(obtainingPersistenceData);
                 readPosts();
 
+
+
             })
         document.getElementById('hideAndShow').style.display = 'block';
         movilIcon.classList.add('shown');
@@ -209,7 +211,7 @@ function out() {
                     buttonLogin.addEventListener('click', function(e) {
                         e.preventDefault();
                         loginPageOne();
-    
+
                         movilIcon.classList.add('shown');
                     });
                 }).then(function() {
@@ -351,13 +353,14 @@ function addNewPost(post) {
 }
 
 //leer coleccion de post
+//AQUIII ESTAN LAS FUNCIONES DE EDITAR Y BORRAR POST EN COMENT.JS HICIMOS LOS CAMBIOS QUE TIENEN QUE VER CON ESTO
 function readPosts() {
     var EmailCortado = 'No hay email';
     let postsRef = db.collection('probando render 2') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos     
     postsRef.orderBy('date', 'desc').onSnapshot(snap => {
         let publishPust = document.querySelector('#showComment')
         publishPust.innerHTML = ''
-        snap.forEach(doc => { 
+        snap.forEach(doc => {
             if (typeof doc.data().mail != 'undefined') {
                 var email = doc.data().mail;
                 var divisiones = email.split("@");
@@ -367,15 +370,84 @@ function readPosts() {
             var image = doc.data().photo ? doc.data().photo : "images/profile-picture-green.jpg";
             let div = buildComent(image, nombre, doc.data().img, doc.data().texto, doc.id);
             let nodo = document.createElement('div')
-            nodo.innerHTML = div
+            nodo.innerHTML = div;
             publishPust.appendChild(nodo);
 
         })
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'right',
+            hoverEnabled: false
+        });
+
+        let deleteComments = document.querySelectorAll('.deletePostUser');
+
+        deleteComments.forEach(function(deleteComment) {
+            deleteComment.addEventListener('click', function(clickedPoints) {
+                console.log(clickedPoints.target.dataset.id);
+                db.collection('probando render 2').doc(clickedPoints.target.dataset.id).delete()
+                    .then(function() {
+                        alert('Post borrado exitosamente'); //AQUI VA LA COLECCION QUE TENGAS TU
+                    }).catch(function(error) {
+                        alert('Error removing post: ', error);
+                    });
+            });
+        });
+
+        var editComments = document.querySelectorAll('.editPostUser'); //vendría siendo editPostUser= a la clase del boton del icono editar
+        editComments.forEach(function(editComment) {
+            editComment.addEventListener('click', function(clickedPencil) {
+                // console.log(clickedPoints.target.dataset.id);
+                var postForEdition = db.collection("probando render 2").doc(clickedPencil.target.dataset.id); //AQUI VA LA COLECCION QUE TENGAS TU
+                // console.log(clickedPoints.target.dataset.id)
+
+                let publicEditPost = document.querySelector('#newPostPublish-' + clickedPencil.target.dataset.id); //este es el id del boton de checkado 
+                var box = document.querySelector('.editTextPostUser-' + clickedPencil.target.dataset.id); //mi textarea
+                box.style.display = 'block'; //estoy incando que cuando el usuario le de click al boton de editar se muestre la texarea
+                var buttonCheck = document.querySelector('.publicationedit-' + clickedPencil.target.dataset.id); //es donde tengo los botones de la nueva foto y del check
+                buttonCheck.style.display = 'block';
+
+                let fileEdit = document.querySelector('#newEditPost-' + clickedPencil.target.dataset.id); //variable para la prueba de subir imagen
+                let imageUrl = '';
+                fileEdit.onchange = answerChangeImage => {
+                    console.log(answerChangeImage);
+
+                    let editedFile = answerChangeImage.target.files[0]
+                    firebase.storage().ref("devpost").child(editedFile.name).put(editedFile)
+                        .then(snap => {
+                            return snap.ref.getDownloadURL() //conseguir el link de la imagen. Retornas la promesa y concatenas el otro then
+                        })
+                        .then(link => {
+                            imageUrl = link
+                            let img = document.createElement('img');
+                            img.src = imageUrl;
+                            document.body.appendChild(img)
+                            document.getElementById("showComment").appendChild(img); //aquí va  el preview de mi imagen antes de dar click en publicar
+                        })
+                }
+
+                publicEditPost.onclick = function() {
+
+                    return postForEdition.update({
+                            texto: box.value,
+                            img: imageUrl,
+
+                        })
+                        .then(function() {
+                            console.log("Document successfully updated!");
+                        })
+                        .catch(function(error) {
+                            // The document probably doesn't exist.
+                            console.error("Error updating document: ", error);
+                        });
+                }
+
+
+
+            });
+        });
     });
 }
-
-
-
 
 function clickMenus(obtainingPersistenceData) {
     var nameMenus = document.querySelectorAll('ul.clickMenu li a'); //Dentro de mi variable voy a meterme dentro del a que es donde tengo c.u de los nombres de mi navbar
@@ -408,6 +480,41 @@ function clickMenus(obtainingPersistenceData) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+// var buttonDelete = document.querySelector('#deleteButton');
+// buttonDelete.addEventListener('click', function (e) {
+//     e.preventDefault();
+//DeletePosts();
+// }
+
+// function DeletePosts() {
+//     doc(id).update({ cosaQueCambio: true })
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+/*necesitan el id
+que llegue como parametro a DeletePost
+con ese id hacen un doc(id).update({cosaQueCambio:true})*/
+//}
 
 
 
