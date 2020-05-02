@@ -28,10 +28,10 @@ function editionOfProfile(user) {
 
         <form action="" class="formPerfil">
             <label for="" class="perfilChanges">
-        <input type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
+        <input id="changeName" value="" type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
       </label>
             <label for="" class="perfilChanges">
-        <input type="text" class="chageProfession boxFields" required="" aria-required="true" placeholder="Cambia tu profesión">
+        <input id="changeProfession" type="text" class="chageProfession boxFields" required="" aria-required="true" placeholder="Cambia tu profesión">
       </label>
             <label for="" class="changePassword">
         <input type="password" placeholder="Cambia tu contraseña" class="validatePassword boxFields" required="" aria-required="true">
@@ -39,7 +39,7 @@ function editionOfProfile(user) {
             <label for="" class="changePassword">
         <input type="password" placeholder="Confirma tu contraseña" class="validatePassword  boxFields" required="" aria-required="true">
       </label>
-            <button type="submit" class="waves-effect waves-light btn-small btn-login">Guardar cambios</button>
+            <button id="saveChangesButton" type="submit" class="waves-effect waves-light btn-small btn-login">Guardar cambios</button>
         </form>
     </div>
         `

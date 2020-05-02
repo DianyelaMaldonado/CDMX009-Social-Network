@@ -466,7 +466,11 @@ function clickMenus(obtainingPersistenceData) {
                 viewProfile(obtainingPersistenceData);
                 window.history.pushState('perfil', 'Perfil', '/Perfil');
             } else if (userClickMenu == "/editarPerfil") {
-                editionOfProfile(obtainingPersistenceData);
+                editionOfProfile(obtainingPersistenceData)
+                    .then(function() {
+                        editProfileUser(obtainingPersistenceData);
+                    })
+
                 window.history.pushState('Editar Perfil', 'Editar Perfil', '/EditarPerfil');
             } else if (userClickMenu == "/cerrarSesion") {
                 out();
@@ -475,12 +479,40 @@ function clickMenus(obtainingPersistenceData) {
     });
 }
 
+function editProfileUser(user) {
+    var savesChanges = document.getElementById('saveChangesButton');
+    savesChanges.addEventListener('click', function() {
+        // console.log('funcionando');
+        var callName = document.querySelector('#changeName');
+        var callProfession = document.querySelector('#changeProfession');
+        // console.log(callProfession.value);
+
+        let editDataProfile = {
+            user: callName,
+            job: callProfession,
+            // photo: user.photoURL,
+            uid: user.uid,
+        }
+
+        addInformationProfileEdit(editDataProfile)
+            .then(function() { //esto es la promesa
+                alert('se guardaron los datos') //este es el resultado de la promesa
+            })
+            .catch(err => {
+                console.log(err) //esto es el error cuando la respuesta es negativa
+            })
 
 
 
 
+    });
+}
 
-
+function addInformationProfileEdit(editDataProfile) {
+    console.log(editDataProfile);
+    let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    return postsRef.add(editDataProfile);
+}
 
 
 
