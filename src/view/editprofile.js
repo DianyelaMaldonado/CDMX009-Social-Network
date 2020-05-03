@@ -25,6 +25,12 @@ function editionOfProfile(user) {
             <img src="${image}" alt="foto de perfil usuario" class="responsive-img photo">
             <p class="changePhoto">Cambiar foto</p>
         </div>
+
+        <div class="selectProfilePicture">
+         <input id="newProfilePhoto" type="file" name="newProfilePhoto" accept="image" class="publication pencilEdit">
+                <label class="waves-effect waves-light btn-small" for="newProfilePhoto"><i class="material-icons center pencil">edit</i></label>
+        </div>
+
         <div class="namePerfilUser editNameProfile"><strong class="black-text perfilName little">${name}</div> 
 
         <form action="" class="formPerfil">

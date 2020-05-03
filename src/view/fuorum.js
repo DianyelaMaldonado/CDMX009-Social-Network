@@ -28,7 +28,7 @@ function viewForum(user) {
                     <div class="namePerfilUser" id="userproperty"><strong class="black-text perfilName little">
                     ${name}
                     <i class="material-icons center editProfileIcon">edit</i></strong></div>
-                    <div class="professionDescription">Profesión</div>
+                    <div class="professionDescription">${user.job}</div>
                 </div>
             </div>
         </section>

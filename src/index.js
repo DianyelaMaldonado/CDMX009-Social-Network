@@ -498,7 +498,7 @@ function editProfileUser(user) {
         addInformationProfileEdit(editDataProfile)
             .then(function() { //esto es la promesa
                 alert('se guardaron los datos') //este es el resultado de la promesa
-                viewProfile('userdata');
+                viewProfile(user);
             })
             .then(function() {
                 // Get the existing data
@@ -524,9 +524,12 @@ function editProfileUser(user) {
 function addInformationProfileEdit(editDataProfile) {
     console.log(editDataProfile);
     return firebase.database().ref('users/' + editDataProfile.uid).set(editDataProfile);
-    // let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    return postsRef.add(editDataProfile);
     // return postsRef.where("uid", "==", editDataProfile.uid).add(editDataProfile);
 }
+
+
 
 
 

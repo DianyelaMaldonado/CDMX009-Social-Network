@@ -595,8 +595,19 @@ input.validatePassword.boxFields {
 
 /* revisar y comparar cambios AGREGUE NUEVOS */
 
+.pencil {
+    color: white;
+}
+
+.selectProfilePicture {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
 #myNewFile,
 #newEditPost,
+#newProfilePhoto,
 .hideFile {
     width: 0.1px;
     height: 0.1px;
@@ -608,11 +619,17 @@ input.validatePassword.boxFields {
 
 #myNewFile+label,
 #newEditPost+label,
+#newProfilePhoto+label,
 .hideFile+label {
     color: white;
     background-color: #662483;
     display: inline-block;
     border-radius: 8px;
+}
+
+#newProfilePhoto+label,
+#newProfilePhoto+label:hover {
+    background-color: #662483;
 }
 
 #myNewFile:focus+label,
@@ -632,6 +649,7 @@ input.validatePassword.boxFields {
 }
 
 #myNewFile:focus+label,
+#newProfilePhoto+label,
 .hideFile {
     outline: 1px dotted#662483;
     outline: -webkit-focus-ring-color auto 5px;

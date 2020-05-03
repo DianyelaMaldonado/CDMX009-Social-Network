@@ -25,7 +25,7 @@ function viewProfile(user) {
 
             <div class="personalInformationPerfilUser">
                 <div class="namePerfilUser"><strong class="black-text perfilName little">${name}<i class="material-icons center editProfileIcon">edit</i></strong></div>
-                <div class="professionDescription">Profesión</div>
+                <div class="professionDescription">${user.job}</div>
             </div>
         </div>
     </section>
