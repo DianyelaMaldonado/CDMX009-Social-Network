@@ -17,10 +17,11 @@ import { clickMenus } from './functions/clickmenus.js';
 import { publicPost, addNewPost } from './functions/publicpoust.js';
 
 
+
 // Start Code
 
 document.addEventListener("DOMContentLoaded", function() {
-    let obtainingPersistenceData = JSON.parse(localStorage.getItem('userdata')); 
+    let obtainingPersistenceData = JSON.parse(localStorage.getItem('userdata'));
     if (obtainingPersistenceData == null) {
         document.getElementById('hideAndShow').style.display = 'none';
         document.getElementById('movilIcon').style.display = 'none';

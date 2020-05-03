@@ -4,9 +4,11 @@ import { editionOfProfile } from '../view/editprofile.js';
 import { viewForum } from '../view/fuorum.js';
 import { publicPost, addNewPost } from './publicpoust.js';
 import { readPosts } from './readposts.js';
+import { editProfileUser } from './profileedit.js';
+
 
 function clickMenus(obtainingPersistenceData) {
-    let nameMenus = document.querySelectorAll('ul.clickMenu li a'); 
+    let nameMenus = document.querySelectorAll('ul.clickMenu li a');
     nameMenus.forEach(function(viewMenus) {
         viewMenus.addEventListener('click', function(clickedMenu) {
             clickedMenu.preventDefault();
@@ -20,9 +22,12 @@ function clickMenus(obtainingPersistenceData) {
                 window.history.pushState('Foro', 'Foro', '/Foro');
             } else if (userClickMenu == "/Perfil") {
                 viewProfile(obtainingPersistenceData);
-                window.history.pushState('perfil', 'Perfil', '/Perfil');
+                window.history.pushState('perfil', 'Perfil', '/Perfil')
             } else if (userClickMenu == "/editarPerfil") {
-                editionOfProfile(obtainingPersistenceData);
+                editionOfProfile(obtainingPersistenceData)
+                    .then(function() {
+                        editProfileUser(obtainingPersistenceData);
+                    })
                 window.history.pushState('Editar Perfil', 'Editar Perfil', '/EditarPerfil');
             } else if (userClickMenu == "/cerrarSesion") {
                 out();

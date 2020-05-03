@@ -526,7 +526,7 @@ button.waves-effect.waves-light.btn-small.btn-login {
     font-weight: bold;
 }
 
-.waves-effect.waves-light.btn.center.iconWeb1, 
+.waves-effect.waves-light.btn.center.iconWeb1,
 .waves-effect.waves-light.btn.center.iconWeb2 {
     margin: 0 auto;
     display: block;
@@ -579,8 +579,19 @@ input.validatePassword.boxFields {
     line-height: 2.5em;
 }
 
+.pencil {
+    color: white;
+}
+
+.selectProfilePicture {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
 #myNewFile,
 #newEditPost,
+#newProfilePhoto,
 .hideFile {
     width: 0.1px;
     height: 0.1px;
@@ -592,6 +603,7 @@ input.validatePassword.boxFields {
 
 #myNewFile+label,
 #newEditPost+label,
+#newProfilePhoto+label,
 .hideFile+label {
     color: white;
     background-color: #662483;
@@ -599,12 +611,17 @@ input.validatePassword.boxFields {
     border-radius: 8px;
 }
 
+#newProfilePhoto+label,
+#newProfilePhoto+label:hover {
+    background-color: #662483;
+}
+
 #myNewFile:focus+label,
 #myNewFile+label:hover {
     background-color: #662483;
 }
 
-.hideFile:focus+label,
+.hideFile :focus+label,
 .hideFile+label:hover {
     background-color: #662483;
 }
@@ -612,9 +629,11 @@ input.validatePassword.boxFields {
 .hideFile+label,
 .hideFile {
     cursor: pointer;
+    /* "hand" cursor */
 }
 
 #myNewFile:focus+label,
+#newProfilePhoto+label,
 .hideFile {
     outline: 1px dotted#662483;
     outline: -webkit-focus-ring-color auto 5px;
@@ -627,7 +646,14 @@ div#showComment {
 .fixed-action-btn {
     position: relative;
     padding-top: 0;
+    /* display: contents; */
 }
+
+
+/* .fixed-action-btn.direction-right ul,
+.publicationedit {
+    display: inline-grid;
+} */
 
 .onBox {
     display: none;
@@ -657,39 +683,31 @@ label.waves-effect.waves-light.btn-small {
     input.validatePassword.boxFields {
         max-width: 50%;
     }
-
     a.waves-effect.waves-light.btn.center.iconWeb1,
     a.waves-effect.waves-light.btn.center.iconWeb2 {
         max-width: 20%;
     }
-
     textarea.comentUser {
         max-width: 40%;
     }
-
     p.chip.boxStyle2 {
         margin-left: 40px;
     }
-
     .informationBox {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
     .comentsAndLikes {
         display: flex;
         justify-content: center;
     }
-
     .chip.boxStyle {
         width: 30%;
     }
-
     .sidenav-trigger {
         display: none;
     }
-
     div#picturePerfect img {
         max-width: 80%;
         height: auto;
@@ -697,7 +715,6 @@ label.waves-effect.waves-light.btn-small {
         border-radius: 8PX;
         margin: 13%;
     }
-    
     div#showComment {
         text-align: center;
     }
