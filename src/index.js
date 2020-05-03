@@ -358,8 +358,8 @@ function readPosts() {
     var EmailCortado = 'No hay email';
     let postsRef = db.collection('probando render 2') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos     
     postsRef.orderBy('date', 'desc').onSnapshot(snap => {
-        let publishPust = document.querySelector('#showComment')
-        publishPust.innerHTML = ''
+        let publishPust = document.querySelector('#showComment');
+        publishPust.innerHTML = '';
         snap.forEach(doc => {
             if (typeof doc.data().mail != 'undefined') {
                 var email = doc.data().mail;
@@ -459,7 +459,7 @@ function clickMenus(obtainingPersistenceData) {
             if (userClickMenu == "/Foro") { //aquí en mi if le coloco la condición en donde si le doy click a foro me lleve a ver el foro y así sucesivamente
                 viewForum(obtainingPersistenceData)
                     .then(function() {
-                        publicPost();
+                        publicPost(obtainingPersistenceData);
                         readPosts();
                     });
                 window.history.pushState('Foro', 'Foro', '/Foro')
@@ -513,6 +513,8 @@ function editProfileUser(user) {
             uid: user.uid,
         }
 
+
+
         addInformationProfileEdit(editDataProfile)
             .then(function() {
                 // Get the existing data
@@ -533,6 +535,7 @@ function editProfileUser(user) {
                 alert('se guardaron los datos') //este es el resultado de la promesa
                 viewProfile(existing);
                 clickMenus(existing);
+                updatePostPic(user.uid, imageUrl)
             })
             .catch(err => {
                 console.log(err) //esto es el error cuando la respuesta es negativa
@@ -545,77 +548,17 @@ function editProfileUser(user) {
 function addInformationProfileEdit(editDataProfile) {
     console.log(editDataProfile);
     return firebase.database().ref('users/' + editDataProfile.uid).set(editDataProfile);
-    // let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
-    // return postsRef.add(editDataProfile);
-    // return postsRef.where("uid", "==", editDataProfile.uid).add(editDataProfile);
 }
 
+function updatePostPic(uid, photo) {
+    return db.collection("probando render 2").where("uid", "==", uid)
+        .get()
+        .then(function(resultAllPost) {
+            resultAllPost.forEach(function(post) {
+                db.collection("probando render 2").doc(post.id).update({
+                    photo: photo,
+                })
+            })
+        })
 
-
-
-
-
-
-
-
-
-
-// var buttonDelete = document.querySelector('#deleteButton');
-// buttonDelete.addEventListener('click', function (e) {
-//     e.preventDefault();
-//DeletePosts();
-// }
-
-// function DeletePosts() {
-//     doc(id).update({ cosaQueCambio: true })
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-/*necesitan el id
-que llegue como parametro a DeletePost
-con ese id hacen un doc(id).update({cosaQueCambio:true})*/
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function editPost() {
-// TODO: Get posts from collection to update on firebase
-
-// TODO: Edit coment and save it on firebase
-
-// TODO: render data on screen
-
-/*necesitan el id
-que llegue como parametro a editPost
-con ese id hacen un doc(id).update({cosaQueCambio:true})*/
-//}
+}
