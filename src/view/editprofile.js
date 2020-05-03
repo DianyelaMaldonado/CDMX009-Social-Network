@@ -28,7 +28,7 @@ function editionOfProfile(user) {
 
         <form action="" class="formPerfil">
             <label for="" class="perfilChanges">
-        <input id="changeName" value="" type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
+        <input id="changeName" value="${EmailCortado}" type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
       </label>
             <label for="" class="perfilChanges">
         <input id="changeProfession" type="text" class="chageProfession boxFields" required="" aria-required="true" placeholder="Cambia tu profesión">

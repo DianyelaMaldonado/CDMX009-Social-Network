@@ -488,8 +488,8 @@ function editProfileUser(user) {
         // console.log(callProfession.value);
 
         let editDataProfile = {
-            user: callName,
-            job: callProfession,
+            user: callName.value,
+            job: callProfession.value,
             // photo: user.photoURL,
             uid: user.uid,
         }
@@ -498,20 +498,32 @@ function editProfileUser(user) {
             .then(function() { //esto es la promesa
                 alert('se guardaron los datos') //este es el resultado de la promesa
             })
+            .then(function() {
+                // Get the existing data
+                var existing = localStorage.getItem('userdata');
+                // If no existing data, create an array
+                // Otherwise, convert the localStorage string to an array
+                existing = existing ? JSON.parse(existing) : {}; //un objeto vacio en el caso de que no haya para yo llenarlo
+                // Add new data to localStorage Array
+                existing['displayName'] = editDataProfile.user;
+                existing['job'] = editDataProfile.job;
+                // Save back to localStorage
+                localStorage.setItem('userdata', JSON.stringify(existing));
+            })
             .catch(err => {
                 console.log(err) //esto es el error cuando la respuesta es negativa
             })
 
 
-
-
     });
+
 }
 
 function addInformationProfileEdit(editDataProfile) {
     console.log(editDataProfile);
-    let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
-    return postsRef.add(editDataProfile);
+    return firebase.database().ref('users/' + editDataProfile.uid).set(editDataProfile);
+    // let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    // return postsRef.where("uid", "==", editDataProfile.uid).add(editDataProfile);
 }
 
 
