@@ -33,7 +33,7 @@ function editionOfProfile(user) {
 
         <div class="namePerfilUser editNameProfile"><strong class="black-text perfilName little">${name}</div> 
 
-        <form action="" class="formPerfil">
+        <div action="" class="formPerfil">
             <label for="" class="perfilChanges">
         <input id="changeName" value="${name}" type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
       </label>
@@ -47,8 +47,9 @@ function editionOfProfile(user) {
         <input type="password" placeholder="Confirma tu contraseña" class="validatePassword  boxFields" required="" aria-required="true">
       </label>
             <button id="saveChangesButton" type="submit" class="waves-effect waves-light btn-small btn-login">Guardar cambios</button>
-        </form>
+        </div>
     </div>
+    <div id="ProfileNewInformation"></div>   
         `
         root.innerHTML = editProfileVieView;
         resolve();

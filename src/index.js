@@ -482,16 +482,36 @@ function clickMenus(obtainingPersistenceData) {
 
 function editProfileUser(user) {
     var savesChanges = document.getElementById('saveChangesButton');
-    savesChanges.addEventListener('click', function() {
-        // console.log('funcionando');
+    let profilePictureInput = document.getElementById('newProfilePhoto'); //aquí pongo en id del input donde voy dar click para entrar a carpeta que muestra imágenes
+    let imageUrl = ''; //la variable está vacia,porque solamente cuando el usuario mande una imagen y la imagen sea subida a firebase, tendremos solo así el link. En caso de que el usuario ponga una imagen se llenará.
+
+    profilePictureInput.onchange = changeProfilePhoto => {
+        console.log(changeProfilePhoto);
+
+        let file = changeProfilePhoto.target.files[0]
+        firebase.storage().ref("devpost").child(file.name).put(file) //le digo a firebase que voy a ocupar su servicio de storage haciendo referencia a la carpeta devpost y que voy a declarar un hijito como mi file que ya declaramos arriba .name ahí entramos a la propiedad name de file, y luego le decimos quiero poner que es PUT este archivo(file) y es tal cual todo el objeto del archivo
+            .then(snap => { ///cuando ya sea exitoso snap es el que me va a retornar la respuesta del storage de firebase
+                return snap.ref.getDownloadURL() //retorname el ref y la url de descarga de mi imagen que acabo de subir a tu servicio, esta url la recibe la siguiente promesa como link
+            })
+            .then(link => { //entonces..Si todo exitoso:
+                console.log(link)
+                imageUrl = link; //devuelveme la url de esta imagen que subiste
+                let img = document.createElement('img');
+                img.src = imageUrl;
+                document.body.appendChild(img)
+                document.getElementById("ProfileNewInformation").appendChild(img); //aquí va  el preview de mi imagen antes de dar click en publicar
+            })
+    }
+
+    savesChanges.onclick = function() {
+
         var callName = document.querySelector('#changeName');
         var callProfession = document.querySelector('#changeProfession');
-        // console.log(callProfession.value);
 
         let editDataProfile = {
             user: callName.value,
             job: callProfession.value,
-            // photo: user.photoURL,
+            img: imageUrl,
             uid: user.uid,
         }
 
@@ -509,6 +529,7 @@ function editProfileUser(user) {
                 // Add new data to localStorage Array
                 existing['displayName'] = editDataProfile.user;
                 existing['job'] = editDataProfile.job;
+                existing['photoURL'] = editDataProfile.img;
                 // Save back to localStorage
                 localStorage.setItem('userdata', JSON.stringify(existing));
             })
@@ -517,7 +538,7 @@ function editProfileUser(user) {
             })
 
 
-    });
+    }
 
 }
 
