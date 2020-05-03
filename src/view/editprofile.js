@@ -22,7 +22,7 @@ function editionOfProfile(user) {
         </div>
 
         <div class="littleCircle secondCircle">
-            <img src="${image}" alt="foto de perfil usuario" class="responsive-img photo">
+            <img src="${image}" alt="foto de perfil usuario" id="userPhoto" class="responsive-img photo">
             <p class="changePhoto">Cambiar foto</p>
         </div>
 

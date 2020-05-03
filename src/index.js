@@ -496,10 +496,8 @@ function editProfileUser(user) {
             .then(link => { //entonces..Si todo exitoso:
                 console.log(link)
                 imageUrl = link; //devuelveme la url de esta imagen que subiste
-                let img = document.createElement('img');
-                img.src = imageUrl;
-                document.body.appendChild(img)
-                document.getElementById("ProfileNewInformation").appendChild(img); //aquí va  el preview de mi imagen antes de dar click en publicar
+                let img = document.getElementById('userPhoto'); //recueparmos la imagen con su id
+                img.src = imageUrl; //y le decimos que su srrc va ser igual a esa imagen y ya se ve el preview en el circulito 
             })
     }
 
@@ -516,10 +514,6 @@ function editProfileUser(user) {
         }
 
         addInformationProfileEdit(editDataProfile)
-            .then(function() { //esto es la promesa
-                alert('se guardaron los datos') //este es el resultado de la promesa
-                viewProfile(user);
-            })
             .then(function() {
                 // Get the existing data
                 var existing = localStorage.getItem('userdata');
@@ -532,11 +526,17 @@ function editProfileUser(user) {
                 existing['photoURL'] = editDataProfile.img;
                 // Save back to localStorage
                 localStorage.setItem('userdata', JSON.stringify(existing));
+
+                return existing;
+            })
+            .then(function(existing) { //esto es la promesa
+                alert('se guardaron los datos') //este es el resultado de la promesa
+                viewProfile(existing);
+                clickMenus(existing);
             })
             .catch(err => {
                 console.log(err) //esto es el error cuando la respuesta es negativa
             })
-
 
     }
 
@@ -545,8 +545,8 @@ function editProfileUser(user) {
 function addInformationProfileEdit(editDataProfile) {
     console.log(editDataProfile);
     return firebase.database().ref('users/' + editDataProfile.uid).set(editDataProfile);
-    let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
-    return postsRef.add(editDataProfile);
+    // let postsRef = db.collection('probandoEditarPerfil') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    // return postsRef.add(editDataProfile);
     // return postsRef.where("uid", "==", editDataProfile.uid).add(editDataProfile);
 }
 
