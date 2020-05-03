@@ -366,6 +366,7 @@ function readPosts() {
                 var divisiones = email.split("@");
                 EmailCortado = divisiones[0];
             } //mi condicion    si, si está ponlo  si no está pon el mail
+            var name = doc.data().displayName ? doc.data().displayName : EmailCortado;
             var nombre = doc.data().user ? doc.data().user : EmailCortado;
             var image = doc.data().photo ? doc.data().photo : "images/profile-picture-green.jpg";
             let div = buildComent(image, nombre, doc.data().img, doc.data().texto, doc.id);
@@ -497,6 +498,7 @@ function editProfileUser(user) {
         addInformationProfileEdit(editDataProfile)
             .then(function() { //esto es la promesa
                 alert('se guardaron los datos') //este es el resultado de la promesa
+                viewProfile('userdata');
             })
             .then(function() {
                 // Get the existing data

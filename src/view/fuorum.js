@@ -13,6 +13,8 @@ function viewForum(user) {
     if (user.photoURL != null) {
         image = user.photoURL;
     }
+    var name = user.displayName ? user.displayName : EmailCortado;
+
     return new Promise(function(resolve, rejected) {
         let forumView = ` <!-- ***********PAGINA 3********* -->
     <div id="containerThree">
@@ -24,7 +26,7 @@ function viewForum(user) {
 
                 <div class="personalInformationPerfilUser">
                     <div class="namePerfilUser" id="userproperty"><strong class="black-text perfilName little">
-                    ${EmailCortado}
+                    ${name}
                     <i class="material-icons center editProfileIcon">edit</i></strong></div>
                     <div class="professionDescription">Profesión</div>
                 </div>

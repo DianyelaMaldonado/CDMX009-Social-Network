@@ -12,6 +12,7 @@ function viewProfile(user) {
     if (user.photoURL != null) {
         image = user.photoURL;
     }
+    var name = user.displayName ? user.displayName : EmailCortado;
     return new Promise(function(resolve, rejected) {
         let profileView = `
        <!-- ***********PAGINA profile********* -->
@@ -23,7 +24,7 @@ function viewProfile(user) {
             </div>
 
             <div class="personalInformationPerfilUser">
-                <div class="namePerfilUser"><strong class="black-text perfilName little">${EmailCortado}<i class="material-icons center editProfileIcon">edit</i></strong></div>
+                <div class="namePerfilUser"><strong class="black-text perfilName little">${name}<i class="material-icons center editProfileIcon">edit</i></strong></div>
                 <div class="professionDescription">Profesión</div>
             </div>
         </div>
@@ -43,7 +44,7 @@ function viewProfile(user) {
 
             <div class="chip boxStyle">
                 <img src="${image}" alt="Contact Person">
-                <p>${EmailCortado}</p>
+                <p>${name}</p>
             </div>
             <i class="fas fa-globe-americas world"></i>
             <i class="material-icons center points">more_vert</i>

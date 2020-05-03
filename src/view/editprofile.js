@@ -11,6 +11,7 @@ function editionOfProfile(user) {
     if (user.photoURL != null) {
         image = user.photoURL;
     }
+    var name = user.displayName ? user.displayName : EmailCortado;
 
     return new Promise(function(resolve, rejected) {
         let editProfileVieView = ` 
@@ -24,11 +25,11 @@ function editionOfProfile(user) {
             <img src="${image}" alt="foto de perfil usuario" class="responsive-img photo">
             <p class="changePhoto">Cambiar foto</p>
         </div>
-        <div class="namePerfilUser editNameProfile"><strong class="black-text perfilName little">${EmailCortado}</div> 
+        <div class="namePerfilUser editNameProfile"><strong class="black-text perfilName little">${name}</div> 
 
         <form action="" class="formPerfil">
             <label for="" class="perfilChanges">
-        <input id="changeName" value="${EmailCortado}" type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
+        <input id="changeName" value="${name}" type="text" class="chageName boxFields" required="" aria-required="true" placeholder="Cambia tu nombre">
       </label>
             <label for="" class="perfilChanges">
         <input id="changeProfession" type="text" class="chageProfession boxFields" required="" aria-required="true" placeholder="Cambia tu profesión">
