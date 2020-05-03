@@ -5,49 +5,50 @@ import { editionOfProfile } from './view/editprofile.js';
 import { viewProfile } from './view/profile.js';
 import { buildComent } from './view/coment.js';
 
-document.addEventListener("DOMContentLoaded", function() {
+
+document.addEventListener("DOMContentLoaded", function () {
     var obtainingPersistenceData = JSON.parse(localStorage.getItem('userdata')); //aquí lo obtengo.GET ITEM es para que local me muestre la data si existe dentro de ella
     if (obtainingPersistenceData == null) { //no hay localStorage
         // console.log('Keep Calm', obtainingPersistenceData);
         document.getElementById('hideAndShow').style.display = 'none';
         document.getElementById('movilIcon').style.display = 'none';
         viewLogin()
-            .then(function() {
+            .then(function () {
                 // En esta parte creo una variable en donde voy a llamar a mi id al que quiero darle el click en este caso el login
                 var buttonLogin = document.querySelector('#doLogin');
-                buttonLogin.addEventListener('click', function(e) {
+                buttonLogin.addEventListener('click', function (e) {
                     e.preventDefault();
                     loginPageOne();
 
                     movilIcon.classList.add('shown');
                 });
-            }).then(function() {
+            }).then(function () {
                 // En esta parte creo una variable en donde voy a llamar a mi id al que quiero darle el click en este caso el ingreso con google
                 var buttonGoogle = document.querySelector('#loginGoogle');
-                buttonGoogle.addEventListener('click', function(e) {
+                buttonGoogle.addEventListener('click', function (e) {
                     e.preventDefault();
                     googleButton();
                 });
             })
-            .then(function() {
+            .then(function () {
                 // En esta parte creo una variable en donde voy a llamar a mi id al
                 // que quiero darle el click en este caso el ingreso con facebook
                 var buttonFacebook = document.querySelector('#loginFacebook');
-                buttonFacebook.addEventListener('click', function(e) {
+                buttonFacebook.addEventListener('click', function (e) {
                     e.preventDefault();
                     facebookButton();
                     document.getElementById('hideAndShow').style.display = 'block';
                     movilIcon.classList.add('shown');
                 });
             })
-            .then(function() {
+            .then(function () {
                 var ntAccount = document.querySelector('#reg');
-                ntAccount.addEventListener('click', function(e) {
+                ntAccount.addEventListener('click', function (e) {
                     e.preventDefault();
                     viewRegister()
-                        .then(function() {
+                        .then(function () {
                             var buttonReg = document.querySelector('#doRegister');
-                            buttonReg.addEventListener('click', function(e) {
+                            buttonReg.addEventListener('click', function (e) {
                                 e.preventDefault();
                                 register();
                             });
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         clickMenus(obtainingPersistenceData);
         viewForum(obtainingPersistenceData)
-            .then(function() {
+            .then(function () {
                 publicPost(obtainingPersistenceData);
                 readPosts();
 
@@ -68,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 // Navegador en móvil
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems);
 });
@@ -85,17 +86,17 @@ function loginPageOne() {
         .then((data) => {
             clickMenus(data.user);
             viewForum(data.user)
-                .then(function() {
+                .then(function () {
                     publicPost(data.user);
                     readPosts();
                 })
-                .then(function() {
+                .then(function () {
                     localStorage.setItem('userdata', JSON.stringify(data.user)); //aquí le digo que guarde como un json formateado mi objeto. su parametro es su nombre el segundo lo que vale
                 })
             document.getElementById('hideAndShow').style.display = 'block';
             movilIcon.classList.add('shown');
         })
-        .catch(function(error) {
+        .catch(function (error) {
             alert('Los datos ingresados no son correctos');
             // Handle Errors here. puedo hacer algo despues del login, si salio mal
             var errorCode = error.code;
@@ -123,22 +124,22 @@ function googleButton() {
     var movilIcon = document.getElementById('movilIcon');
 
     firebase.auth().signInWithPopup(provider)
-        .then(function(data) {
+        .then(function (data) {
             // This gives you a Google Access Token. You can use it to access the Google API.
             var token = data.credential.accessToken;
             // The signed-in user info.
             var user = data.user;
             clickMenus(user);
             viewForum(user)
-                .then(function() {
+                .then(function () {
                     publicPost();
-                }).then(function() {
+                }).then(function () {
                     localStorage.setItem('userdata', JSON.stringify(user)); //aquí le digo que guarde como un json formateado mi objeto, esa data.user la bautizo como user data que es lo que estoy colocando arriba
                 })
             document.getElementById('hideAndShow').style.display = 'block';
             movilIcon.classList.add('shown');
             // ...
-        }).catch(function(error) {
+        }).catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -162,21 +163,21 @@ function facebookButton() {
     var movilIcon = document.getElementById('movilIcon');
 
     firebase.auth().signInWithPopup(provider)
-        .then(function(data) {
+        .then(function (data) {
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
             var token = data.credential.accessToken;
             // The signed-in user info.
             var user = data.user;
             clickMenus(user);
             viewForum(user)
-                .then(function() {
+                .then(function () {
                     publicPost();
-                }).then(function() {
+                }).then(function () {
                     localStorage.setItem('userdata', JSON.stringify(user)); //aquí le digo que guarde como un json formateado mi objeto
                 })
             movilIcon.classList.add('shown');
             document.getElementById('hideAndShow').style.display = 'block';
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(error);
             // Handle Errors here.
             var errorCode = error.code;
@@ -194,51 +195,51 @@ function out() {
     console.log('revisando out');
 
     firebase.auth().signOut()
-        .then(function() {
+        .then(function () {
             document.getElementById('movilIcon').classList.toggle('shown');
             document.getElementById('hideAndShow').style.display = 'none';
         })
-        .then(function() {
+        .then(function () {
             viewLogin()
-                .then(function() {
+                .then(function () {
                     localStorage.setItem('userdata', null); //aquí le digo que guarde como un json formateado mi objeto
                 })
-                .then(function() {
+                .then(function () {
                     // En esta parte creo una variable en donde voy a llamar a mi id al que quiero darle el click en este caso el login
                     var buttonLogin = document.querySelector('#doLogin');
-                    buttonLogin.addEventListener('click', function(e) {
+                    buttonLogin.addEventListener('click', function (e) {
                         e.preventDefault();
                         loginPageOne();
-    
+
                         movilIcon.classList.add('shown');
                     });
-                }).then(function() {
+                }).then(function () {
                     // En esta parte creo una variable en donde voy a llamar a mi id al que quiero darle el click en este caso el ingreso con google
                     var buttonGoogle = document.querySelector('#loginGoogle');
-                    buttonGoogle.addEventListener('click', function(e) {
+                    buttonGoogle.addEventListener('click', function (e) {
                         e.preventDefault();
                         googleButton();
                     });
                 })
-                .then(function() {
+                .then(function () {
                     // En esta parte creo una variable en donde voy a llamar a mi id al
                     // que quiero darle el click en este caso el ingreso con facebook
                     var buttonFacebook = document.querySelector('#loginFacebook');
-                    buttonFacebook.addEventListener('click', function(e) {
+                    buttonFacebook.addEventListener('click', function (e) {
                         e.preventDefault();
                         facebookButton();
                         document.getElementById('hideAndShow').style.display = 'block';
                         movilIcon.classList.add('shown');
                     });
                 })
-                .then(function() {
+                .then(function () {
                     var ntAccount = document.querySelector('#reg');
-                    ntAccount.addEventListener('click', function(e) {
+                    ntAccount.addEventListener('click', function (e) {
                         e.preventDefault();
                         viewRegister()
-                            .then(function() {
+                            .then(function () {
                                 var buttonReg = document.querySelector('#doRegister');
-                                buttonReg.addEventListener('click', function(e) {
+                                buttonReg.addEventListener('click', function (e) {
                                     e.preventDefault();
                                     register();
                                 });
@@ -248,7 +249,7 @@ function out() {
 
             window.history.pushState('cerrar sesion', 'cerrar sesion', '/');
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log(error);
 
         });
@@ -273,7 +274,7 @@ function register() {
                 document.getElementById('hideAndShow').style.display = 'block';
                 movilIcon.classList.add('shown');
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -315,7 +316,7 @@ function publicPost(user) {
     }
 
     let publicPost = document.getElementById('publish');
-    publicPost.onclick = function() {
+    publicPost.onclick = function () {
         let text = document.getElementById('userCommit'); //variable con id en donde se pintaran los post, textArea
         // traer el texto
         console.log(user);
@@ -329,10 +330,10 @@ function publicPost(user) {
             uid: user.uid,
         }
         addNewPost(post)
-            .then(function(post) { //esto es la promesa
+            .then(function (post) { //esto es la promesa
                 alert('hello') //este es el resultado de la promesa
             })
-            .then(function() {
+            .then(function () {
                 text.value = "";
             })
             .catch(err => {
@@ -346,46 +347,89 @@ function publicPost(user) {
 //pasar a la funcion el objeto que se encuentra en la base de datos de firebase
 function addNewPost(post) {
     console.log(post)
-    let postsRef = db.collection('probando render 2') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
+    let postsRef = db.collection('post') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos
     return postsRef.add(post);
 }
 
 //leer coleccion de post
 function readPosts() {
-    var EmailCortado = 'No hay email';
-    let postsRef = db.collection('probando render 2') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos     
+    let EmailCortado = 'No hay email';
+    let postsRef = db.collection('post') //se llama post porque asi se llama nuestra coleccion en Database , le podemos llamar como queramos     
     postsRef.orderBy('date', 'desc').onSnapshot(snap => {
         let publishPust = document.querySelector('#showComment')
         publishPust.innerHTML = ''
-        snap.forEach(doc => { 
+        snap.forEach(doc => {
             if (typeof doc.data().mail != 'undefined') {
-                var email = doc.data().mail;
-                var divisiones = email.split("@");
+                let email = doc.data().mail;
+                let divisiones = email.split("@");
                 EmailCortado = divisiones[0];
             } //mi condicion    si, si está ponlo  si no está pon el mail
-            var nombre = doc.data().user ? doc.data().user : EmailCortado;
-            var image = doc.data().photo ? doc.data().photo : "images/profile-picture-green.jpg";
+            let nombre = doc.data().user ? doc.data().user : EmailCortado;
+            let image = doc.data().photo ? doc.data().photo : "images/profile-picture-green.jpg";
             let div = buildComent(image, nombre, doc.data().img, doc.data().texto, doc.id);
             let nodo = document.createElement('div')
             nodo.innerHTML = div
             publishPust.appendChild(nodo);
-
         })
-    });
+
+        let elems = document.querySelectorAll('.fixed-action-btn');
+        let instances = M.FloatingActionButton.init(elems, {
+            direction: 'right',
+            hoverEnabled: false
+        });
+
+        //Función borrar post
+        let deleteComments = document.querySelectorAll('.deletePostUser');
+        console.log(deleteComments);
+        deleteComments.forEach(function (deleteComment) {
+            deleteComment.addEventListener('click', function (clickedPoints) {
+                console.log(clickedPoints.target.dataset.id);
+                db.collection('post').doc(clickedPoints.target.dataset.id).delete()
+                    .then(function () {
+                        alert('Post succesfully deleted');
+                    }).catch(function (error) {
+                        alert('Error removing post: ', error);
+                    });
+            });
+        });
+
+});
 }
+
+//Función borrar post
+
+/*function deleteMyPost(id) {
+
+    let deleteButton= document.querySelectorAll('.deletePostUser');
+
+    deleteButton.onclick = function () {
+        let allPosts = db.collection("post").doc("id");
+
+        db.collection('post').doc(id).delete()
+        .then(function () {
+            console.log('Post succesfully deleted');
+        }).catch(function (error) {
+            console.err('Error removing post: ', error);
+        });
+    }
+}*/
+
+
+
+
 
 
 
 
 function clickMenus(obtainingPersistenceData) {
     var nameMenus = document.querySelectorAll('ul.clickMenu li a'); //Dentro de mi variable voy a meterme dentro del a que es donde tengo c.u de los nombres de mi navbar
-    nameMenus.forEach(function(viewMenus) { //en una nueva variable hago un forEach con un parámetro dentro de la función 
-        viewMenus.addEventListener('click', function(clickedMenu) { //llamo el parámetro en este caso es (viewMenus)en  el cual en el addEventListener le digo que escuche el click con una función a la que le pongo también un parámetro por nombre (clickedMenu)
+    nameMenus.forEach(function (viewMenus) { //en una nueva variable hago un forEach con un parámetro dentro de la función 
+        viewMenus.addEventListener('click', function (clickedMenu) { //llamo el parámetro en este caso es (viewMenus)en  el cual en el addEventListener le digo que escuche el click con una función a la que le pongo también un parámetro por nombre (clickedMenu)
             clickedMenu.preventDefault();
             var userClickMenu = clickedMenu.target.dataset.nav; //creo una nueva variable que va a ser igual al parámetro anterior (clickedMenu) en donde con target.dataset estaría llamando a data-nav que declaré en mi html
             if (userClickMenu == "/Foro") { //aquí en mi if le coloco la condición en donde si le doy click a foro me lleve a ver el foro y así sucesivamente
                 viewForum(obtainingPersistenceData)
-                    .then(function() {
+                    .then(function () {
                         publicPost();
                         readPosts();
                     });
@@ -408,35 +452,6 @@ function clickMenus(obtainingPersistenceData) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function editPost() {
-// TODO: Get posts from collection to update on firebase
-
-// TODO: Edit coment and save it on firebase
-
-// TODO: render data on screen
 
 /*necesitan el id
 que llegue como parametro a editPost

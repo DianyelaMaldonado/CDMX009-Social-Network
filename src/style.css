@@ -627,6 +627,15 @@ div#showComment {
     text-align: center;
 }
 
+.fixed-action-btn {
+    position: relative;
+    padding-top: 0;
+    /* display: contents; */
+}
+
+.fixed-action-btn.direction-right ul {
+    display: inline-grid;
+}
 
 /* *********MediasQuerys*********** */
 

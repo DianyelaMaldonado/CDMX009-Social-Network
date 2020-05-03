@@ -7,13 +7,25 @@ function buildComent(imageUser, nameUser, img, text, id) {
             <p>${nameUser}</p>
         </div>
         <i class="fas fa-globe-americas world"></i>
-        <i class="material-icons center points actionsComment" data-id="${id}">more_vert</i>
+        <div class="fixed-action-btn">
+
+   <i class="material-icons center points actionsComment">more_vert</i>
+
+  <ul>
+    <li data-id="${id} class="editPostUser"><a class="btn-floating  purple darken-1"><i class="material-icons">edit</i></a></li>
+    <li  class="deletePostUser" data-id="${id}"><a class="btn-floating  purple darken-1" ><i data-id="${id}" class="material-icons" >delete</i></a></li>
+     </ul>
+    </div>
+
     </div>
 
     <div class="comentsAndLikes">
     <img width="200" src="${img}"/>
          <p class="coments">${text}</p>
     </div>
+
+
+
 
     <div class="punchButtons comentsAndLikes">
          <div class="likeButton"> <a class="waves-effect waves-light btn-small"><i class="material-icons left like">thumb_up</i></a>
