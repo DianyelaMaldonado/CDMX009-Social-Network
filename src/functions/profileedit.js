@@ -2,7 +2,6 @@ import { viewProfile } from '../view/profile.js';
 import { clickMenus } from './clickmenus.js';
 
 function editProfileUser(user) {
-    alert('hola');
     let savesChanges = document.getElementById('saveChangesButton');
     let profilePictureInput = document.getElementById('newProfilePhoto'); //aquí pongo en id del input donde voy dar click para entrar a carpeta que muestra imágenes
     let imageUrl = ''; //la variable está vacia,porque solamente cuando el usuario mande una imagen y la imagen sea subida a firebase, tendremos solo así el link. En caso de que el usuario ponga una imagen se llenará.
@@ -16,7 +15,7 @@ function editProfileUser(user) {
                 return snap.ref.getDownloadURL() //retorname el ref y la url de descarga de mi imagen que acabo de subir a tu servicio, esta url la recibe la siguiente promesa como link
             })
             .then(link => { //entonces..Si todo exitoso:
-                console.log(link)
+                // console.log(link)
                 imageUrl = link; //devuelveme la url de esta imagen que subiste
                 let img = document.getElementById('userPhoto'); //recueparmos la imagen con su id
                 img.src = imageUrl; //y le decimos que su srrc va ser igual a esa imagen y ya se ve el preview en el circulito 
