@@ -20,19 +20,19 @@ function publicPost(user) {
     let publicPost = document.getElementById('publish');
 
     publicPost.onclick = function() {
-        let text = document.getElementById('userCommit'); 
+        let text = document.getElementById('userCommit');
         console.log(user);
         let post = {
             texto: text.value,
             user: user.displayName,
             date: new Date(),
-            img: imageUrl, 
+            img: imageUrl,
             mail: user.email,
             photo: user.photoURL,
             uid: user.uid,
         }
         addNewPost(post)
-            .then(function(post) { 
+            .then(function(post) {
                 alert('Post publicado');
             })
             .then(function() {
@@ -49,7 +49,7 @@ function publicPost(user) {
 
 function addNewPost(post) {
     console.log(post);
-    let postsRef = db.collection('pruebas_020520');
+    let postsRef = db.collection('probando render 2');
     return postsRef.add(post);
 };
 

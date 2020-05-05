@@ -1,4 +1,7 @@
-//Login with Google Acount
+import { clickMenus } from './clickmenus.js';
+import { viewForum } from '../view/fuorum.js';
+import { publicPost } from './publicpoust.js';
+
 function googleButton() {
     let provider = new firebase.auth.GoogleAuthProvider();
     let movilIcon = document.getElementById('movilIcon');
@@ -15,11 +18,11 @@ function googleButton() {
                     publicPost();
                 })
                 .then(function() {
-                    localStorage.setItem('userdata', JSON.stringify(user)); 
+                    localStorage.setItem('userdata', JSON.stringify(user));
                 });
             document.getElementById('hideAndShow').style.display = 'block';
             movilIcon.classList.add('shown');
-            
+
         }).catch(function(error) {
             let errorCode = error.code;
             let errorMessage = error.message;

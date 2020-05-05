@@ -9,19 +9,19 @@ function register() {
     let registerEmailLogin2 = document.getElementById('registerLoginEmail2').value;
     let registerPassLogin2 = document.getElementById('registerLoginPass2').value;
     let registerConfirmPassLogin2 = document.getElementById('registerLoginConfirmPass2').value;
-    let movilIcon = document.getElementById('movilIcon');  
-    console.log(registerNameLogin2);
-    
-    
+    let movilIcon = document.getElementById('movilIcon');
+    // console.log(registerNameLogin2);
+
+
     if (registerPassLogin2 != registerConfirmPassLogin2) {
         alert('Las contraseñas deben coincidir');
     } else {
         firebase.auth().createUserWithEmailAndPassword(registerEmailLogin2, registerPassLogin2)
             .then((data) => {
                 clickMenus(data.user);
-                viewForum(data.user);  
+                viewForum(data.user);
                 publicPost(data.user);
-                readPosts(data.user);             
+                readPosts(data.user);
                 document.getElementById('hideAndShow').style.display = 'block';
                 movilIcon.classList.add('shown');
             })

@@ -5,7 +5,7 @@ import { viewRegister } from '../view/register.js';
 import { register } from './register.js';
 
 function out() {
-    console.log('revisando out');
+    // console.log('revisando out');
 
     firebase.auth().signOut()
         .then(function() {
@@ -15,13 +15,13 @@ function out() {
         .then(function() {
             viewLogin()
                 .then(function() {
-                    localStorage.setItem('userdata', null); 
+                    localStorage.setItem('userdata', null);
                 })
                 .then(function() {
                     let buttonLogin = document.querySelector('#doLogin');
                     buttonLogin.addEventListener('click', function(e) {
                         e.preventDefault();
-                        loginPageOne();    
+                        loginPageOne();
                         movilIcon.classList.add('shown');
                     });
                 })

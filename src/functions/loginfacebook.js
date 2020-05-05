@@ -1,4 +1,8 @@
 //Login with Facebook
+import { clickMenus } from './clickmenus.js';
+import { viewForum } from '../view/fuorum.js';
+import { publicPost } from './publicpoust.js';
+
 function facebookButton() {
     let provider = new firebase.auth.FacebookAuthProvider();
     let movilIcon = document.getElementById('movilIcon');
@@ -15,7 +19,7 @@ function facebookButton() {
                     publicPost();
                 })
                 .then(function() {
-                    localStorage.setItem('userdata', JSON.stringify(user)); 
+                    localStorage.setItem('userdata', JSON.stringify(user));
                 })
             movilIcon.classList.add('shown');
             document.getElementById('hideAndShow').style.display = 'block';
