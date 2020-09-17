@@ -19,7 +19,6 @@ Diseño inicial
 Diseño final
 
 <img src= "src/images/prototipo_actual.jpg">
-
 **Feeback**
 Al inicio del diseño de la aplicacion construimos una idea de acuerdo a nuestras creencias y creyendo que habíamos tomando buenas decisiones sin embargo al recibir los comentarios de parte de coaches y prospectos a usuarios decidimos usar colores mas  atractivos,  formas modernas en cuanto al diseño en general y  seguir las tendencias actuales en cuanto a aplicaciones móbiles.
 
@@ -46,59 +45,3 @@ Tecnologías y características de la aplicación
 - SPA
 - MVC
 - Responsive Desing
-
-
-Objetivos de aprendizaje 
-
-
-HTML y CSS
-
-
-- [x] HTML semántico
-- [x] CSS flexbox
-- [x] Construir tu aplicación respetando el diseño realizado (maquetación).
-
-   DOM y Web APIs
-   
-- [x] Manipulación dinámica del DOM
-- [x] History API
-- [x] [Localstorage]
-
- Javascript
- 
-- [x] Uso de callbacks
-- [x] Consumo de Promesas
-- [x] Uso ES modules (import | export)
-
- Firebase
- 
-- [x] Firestore
-- [x] Firebase Auth
-- [x] Firebase security rules
-- [x] Uso de onSnapshot | onAuthStateChanged
-
- Testing
- 
-- [ ] Testeo de tus funciones
-- [ ] Testeo asíncrono
-- [ ] Mocking
-
-  Colaboración en Github
-  
-  
-- [x] Branches
-- [x] Pull Requests
-- [ ] Tags
-
- Organización en Github
- 
- - [ ] Projects
- - [ ] Issues
- - [ ] Labels
- - [ ] Milestones
- 
- Buenas prácticas de desarrollo
- 
-- [x] Modularización
-- [x] Nomenclatura / Semántica
-- [x] Linting
